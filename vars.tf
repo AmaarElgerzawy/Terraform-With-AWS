@@ -36,6 +36,11 @@ variable "pubsub3cidr" {
   default = "172.21.3.0/24"
 }
 
+variable "privsub1cidr" { default = "172.21.11.0/24" }
+variable "privsub2cidr" { default = "172.21.12.0/24" }
+variable "privsub3cidr" { default = "172.21.13.0/24" }
+
+
 variable "AMI_ID" {
   default = "ami-07ff62358b87c7116"
 }

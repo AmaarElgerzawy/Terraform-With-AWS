@@ -7,7 +7,7 @@ resource "aws_security_group" "ec2_sg" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = [var.vpc_cidr]
+    security_groups = [aws_security_group.lb_sg.id]
   }
 
   egress {
@@ -22,21 +22,24 @@ resource "aws_security_group" "ec2_sg" {
 }
 
 resource "aws_instance" "my_ec2" {
-  ami             = var.AMI_ID
-  instance_type   = "t2.medium"
-  security_groups = [aws_security_group.ec2_sg.id]
+  ami           = var.AMI_ID
+  instance_type = "t2.medium"
 
-  subnet_id = module.vpc.public_subnets[0]
-  key_name  = "Udemy_10_DevOps_Projects_Automate_Deploy_and_Scale_with_Kubernete"
+  subnet_id = module.vpc.private_subnets[0]
+
+  vpc_security_group_ids = [aws_security_group.ec2_sg.id]
+
+  associate_public_ip_address = false  # NO public IP
 
   user_data = <<-EOF
     #!/bin/bash
     sudo yum update -y
     sudo yum install -y nginx
-    sudo systemctl start nginx
     sudo systemctl enable nginx
-    EOF
+    sudo systemctl start nginx
+  EOF
+
   tags = {
-    Name = "My_EC2_Instance"
+    Name = "Private_EC2_With_NAT"
   }
 }

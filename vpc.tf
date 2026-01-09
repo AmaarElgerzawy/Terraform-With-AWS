@@ -4,20 +4,27 @@ module "vpc" {
   name = var.vpc_name
   cidr = var.vpc_cidr
 
-  azs            = [var.zone1, var.zone2, var.zone3]
-  public_subnets = [var.pubsub1cidr, var.pubsub2cidr, var.pubsub3cidr]
+  azs = [var.zone1, var.zone2, var.zone3]
 
-  enable_nat_gateway   = false
-  single_nat_gateway   = false
-  enable_dns_hostnames = true
+  # Public subnets → NAT lives here
+  public_subnets = [
+    var.pubsub1cidr,
+    var.pubsub2cidr,
+    var.pubsub3cidr
+  ]
+
+  # Private subnets → EC2 lives here
+  private_subnets = [
+    var.privsub1cidr,
+    var.privsub2cidr,
+    var.privsub3cidr
+  ]
+
+  enable_nat_gateway = true
+  single_nat_gateway = true
+
+  map_public_ip_on_launch = false
+
   enable_dns_support   = true
-
-  tags = {
-    Terraform   = "true"
-    Environment = "Prod"
-  }
-
-  vpc_tags = {
-    Name = var.vpc_name
-  }
+  enable_dns_hostnames = true
 }
