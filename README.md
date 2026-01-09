@@ -134,18 +134,6 @@ After deployment:
 * Infrastructure as Code with Terraform modules
 * Secure and scalable AWS network design
 
----
-
-## 🔮 Possible Improvements
-
-* Add an Application Load Balancer (ALB)
-* Use AWS Systems Manager (SSM) instead of SSH
-* Enable Auto Scaling Groups
-* Add CloudWatch monitoring and alerts
-* Multi-AZ NAT Gateways for high availability
-
----
-
 ## 🧠 Key Takeaway
 
 > **An Internet Gateway alone does not expose EC2 instances.
